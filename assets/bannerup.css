@@ -1,4 +1,4 @@
-.banneron_overlay {
+.bannerup_overlay {
     display:flex;
     position:fixed;
     align-items:center;
@@ -13,7 +13,7 @@
     z-index:9999;
 }
 
-.banneron_overlay * {
+.bannerup_overlay * {
      font-family: "Poppins", sans-serif;
 }
 
@@ -34,6 +34,7 @@
 }
 .banner_col_1 {
     flex:0 1 55%;
+    background-color:#f76756;
 }
 .banner_col_2 {
     flex:0 1 45%;
@@ -49,13 +50,14 @@
     width:100%;
     border-radius: 4px 0 0 4px;
 }
-@supports(object-fit:cover) {
+@supports(object-fit:contain) {
     .banner img {
         height:100%;
-        object-fit:cover;
+        object-fit:contain;
     }
 }
-#closeBannerOn {
+#closeBannerUp {
+    box-sizing: border-box;
     position:absolute;
     cursor:pointer;
     border:none;
@@ -69,14 +71,14 @@
     -webkit-transition:all .2s ease-in-out;
     transition:all .2s ease-in-out;
 }
-#closeBannerOn:hover {
+#closeBannerUp:hover {
     box-shadow:0 0 6px 2px rgba(0,0,0,0.2);
 }
-.banneron_content {
+.bannerup_content {
     display:flex;
     flex-direction:column;
 }
-.banneron_content a.banneron_button {
+.bannerup_content a.bannerup_button {
     display:inline-block;
     position:relative;
     top:25px;
@@ -94,6 +96,6 @@
     font-size:30px;
     font-weight:800;
 }
-.banneron_content {
+.bannerup_content {
     color:#2a2a2a;
 }

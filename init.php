@@ -32,49 +32,57 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+Init::Actions();
+
 
 abstract class Init
 {
 
-    /**
-     * Switch to determine which banner gets displayed in any given period.
-     * Any new banners will require a new child class in Banners dir, with
-     * the name inserted here.
-     */
-    public static $banner_type = "SecurityQuestion";
-
 
     public static function Actions()
     {
-        add_action('wp_rest_api_init', [self::class, 'RestRoutes']);
+        if (!defined('BANNERUP_POST_TYPE')) {
+            define('BANNERUP_POST_TYPE', 'SecurityQuestion');
+        }
+        include_once plugin_dir_path(__FILE__) . 'Log/Log.php';
+
+        add_action('rest_api_init', [self::class, 'RestRoutes']);
         add_action('template_redirect', [self::class, 'ShowBanner']);
-    }
-
-
-    /**
-     * Rest api will direct to different handlers for any supplied action key.
-     * Ideally this will be a static function in the Banner class.
-     */
-    public static function RestRoutes()
-    {
-        // site_url() . '/wp-json/banner-on/action-completed'
-        register_rest_route('banner-on', '/action-completed', array(
-            'methods'  => 'POST',
-            'callback' => [self::class, "HandleActionCompleted"],
-            'permission_callback' => function () {
-                return is_user_logged_in();
-            }
-        ));
     }
 
 
     public static function ShowBanner()
     {
         if (is_admin()) return;
-        include plugin_dir_path(__FILE__) . 'Banners/Banner.php';
-        $object = "BannerUp\\Banners\\" . self::$banner_type;
+
+        include_once plugin_dir_path(__FILE__) . 'Banners/Banner.php';
+        include_once plugin_dir_path(__FILE__) . 'Banners/' . BANNERUP_POST_TYPE . '.php';
         
-        $banner = new $object();
-        $banner->Run();
+        $object = "BannerUp\\" . BANNERUP_POST_TYPE;
+        if (class_exists($object)) {
+            $banner = new $object();
+            $banner->Run();
+        } else {
+            Log::info("Banner class not found: " . $object);
+        }
+        
     }
+
+
+    public static function RestRoutes()
+    {
+        // site_url() . '/wp-json/banner-up/action-completed'
+        include_once plugin_dir_path(__FILE__) . 'Banners/Banner.php';
+        include_once plugin_dir_path(__FILE__) . 'Banners/' . BANNERUP_POST_TYPE . '.php';
+        $class = "BannerUp\\" . BANNERUP_POST_TYPE;
+        
+        register_rest_route('banner-up', '/action-completed', array(
+            'methods'  => 'POST',
+            'callback' => [$class, "HandleRequest"],
+            'permission_callback' => function () {
+                return is_user_logged_in();
+            }
+        ));
+    }
+
 }

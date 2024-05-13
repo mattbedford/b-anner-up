@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
         scrollLock.disablePageScroll();
     }
 
-    const closeBannerOn = document.getElementById('closeBannerUp');
-    closeBannerOn.addEventListener('click', function() {
+    const closeBannerUp = document.getElementById('closeBannerUp');
+    closeBannerUp.addEventListener('click', function() {
             scrollLock.enablePageScroll();
     });
 

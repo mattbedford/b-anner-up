@@ -1,0 +1,21 @@
+#ignore .vscode
+.vscode
+/vscode
+
+#ignore package.json
+package.json
+/package.json
+package-lock.json
+
+#ignore node_modules
+node_modules
+
+#ignore .git
+.git
+
+#ignore .wp-env
+.wp-env
+.wp-env.json
+
+#ignore zips
+*.zip

@@ -102,15 +102,7 @@ abstract class Banner
 
             $user_id = get_current_user_id();
             if(0 === $user_id) return false;
-
-            // Check the value for a unix timestamp. If it exists, do not show banner again for 24 hours.
-            $time = get_user_meta($user_id, $this->banner_identifier . '_has_been_actioned', true);
-            if($time) {
-                $time = intval($time);
-                $now = time();
-                if($now - $time < 86400) return true;
-            }
-            return false;
+            return boolval(get_user_meta($user_id, $this->banner_identifier . '_has_been_actioned', true));
 
         }
 

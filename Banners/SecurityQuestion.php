@@ -75,8 +75,8 @@ class SecurityQuestion extends Banner
     {
         if(!empty($data['question']) && !empty($data['answer'])) {
             
-            $question = sanitize_text_field($data['question']);
-            $answer = sanitize_text_field($data['answer']);
+            $question = trim(sanitize_text_field($data['question']));
+            $answer = trim(sanitize_text_field($data['answer']));
 
             delete_user_meta($user_id, 'p22_security_question');
             delete_user_meta($user_id, 'p22_security_answer');

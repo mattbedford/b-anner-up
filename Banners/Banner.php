@@ -113,8 +113,9 @@ abstract class Banner
             if(0 === $user_id) return;
     
             $data = $request->get_json_params();
+            $t = time();
     
-            update_user_meta($user_id, BANNERUP_POST_TYPE . '_has_been_actioned', true);
+            update_user_meta($user_id, BANNERUP_POST_TYPE . '_has_been_actioned', $t);
 
             $child_class = "BannerUp\\" . BANNERUP_POST_TYPE;
             return $child_class::HandleActionCompleted($data, $user_id);

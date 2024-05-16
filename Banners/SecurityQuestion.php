@@ -22,9 +22,39 @@ class SecurityQuestion extends Banner
     protected function UserIsAMatch()
     {
 
-        return is_user_logged_in();
+        $user_id = get_current_user_id();
+        if(0 === $user_id) return false;
+
+        if(!$this->UserAlreadySawBanner($user_id)) return true; // User never saw banner
+        if($this->AcceptableTimeHasPassed($user_id) && !$this->UserHasAnswered($user_id)) return true; // User saw banner but acceptable time has passed and they didn't answer yet
+        return false;
+        
     }
 
+    protected function UserHasAnswered($user_id)
+    {
+       
+        $answer = get_user_meta($user_id, 'p22_security_answer', true);
+        if(empty($answer)) return false;
+        return true;
+    }
+
+    protected function AcceptableTimeHasPassed($user_id)
+    {
+        $last_seen = get_user_meta($user_id, $this->banner_identifier . '_has_been_displayed', true);
+
+        if(boolval($last_seen) !== true) return true;
+        if(time() - $last_seen < 172800) return false; // Don't show if last showing was less than 2 days ago
+
+        return false;
+    }
+
+
+    protected function UserAlreadySawBanner($user_id)
+    {
+
+        return boolval(get_user_meta($user_id, $this->banner_identifier . '_has_been_displayed', true));
+    }
 
     protected function Html() 
     {

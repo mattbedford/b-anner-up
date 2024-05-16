@@ -22,12 +22,12 @@ abstract class Banner
             $this->LoadContents();
             if(true !== $this->UserIsAMatch()) return;
             if(true === $this->BannerAlreadyActioned()) return;
-
+            $this->SetBannerDisplayedMeta();
             add_action('wp_footer', [$this, 'Display']);
         }
 
         /**
-         * Set the banner identifier to the class name of the instantiating object (hence $this).
+         * Set the banner identifier to the name of the instantiating object
          */
         protected function SetBannerIdentifier()
         {
@@ -121,6 +121,14 @@ abstract class Banner
             return $child_class::HandleActionCompleted($data, $user_id);
     
         }
+
+        private function SetBannerDisplayedMeta() 
+        {
+            $user_id = get_current_user_id();
+            if(0 === $user_id) return;
+            update_user_meta($user_id, $this->banner_identifier . '_has_been_displayed', time());
+        }
+        
 
         abstract protected function UserIsAMatch(); // return bool
         abstract protected function Html(); // return html string for banner content. The "frame" is set above in the Display method.

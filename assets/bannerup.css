@@ -31,6 +31,7 @@
     max-height:80dvh;
     max-width:850px;
     border-radius:14px;
+    overflow-x: auto;
 }
 .banner_col_1 {
     flex:0 1 55%;
@@ -77,6 +78,8 @@
 .bannerup_content {
     display:flex;
     flex-direction:column;
+    line-height: 1.1em;
+    margin: 15px 0;
 }
 .bannerup_content a.bannerup_button {
     display:inline-block;

@@ -26,18 +26,11 @@ class SecurityQuestion extends Banner
         if(0 === $user_id) return false;
 
         if(!$this->UserAlreadySawBanner($user_id)) return true; // User never saw banner
-        if($this->AcceptableTimeHasPassed($user_id) && !$this->UserHasAnswered($user_id)) return true; // User saw banner but acceptable time has passed and they didn't answer yet
+        if($this->AcceptableTimeHasPassed($user_id)) return true; // User saw banner but acceptable time has passed and they didn't answer yet
         return false;
         
     }
 
-    protected function UserHasAnswered($user_id)
-    {
-       
-        $answer = get_user_meta($user_id, 'p22_security_answer', true);
-        if(empty($answer)) return false;
-        return true;
-    }
 
     protected function AcceptableTimeHasPassed($user_id)
     {

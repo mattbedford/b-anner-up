@@ -44,7 +44,7 @@ class SecurityQuestion extends Banner
         $last_seen = get_user_meta($user_id, $this->banner_identifier . '_has_been_displayed', true);
 
         if(boolval($last_seen) !== true) return true;
-        if(time() - $last_seen < 172800) return false; // Don't show if last showing was less than 2 days ago
+		if(time() - intval($last_seen) > 172800) return true; 
 
         return false;
     }

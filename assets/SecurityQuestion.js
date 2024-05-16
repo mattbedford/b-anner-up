@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     BannerUpForm.addEventListener('submit', function(e){
         e.preventDefault();
         BannerUpActioned();
-    });
+    }); 
 
     async function BannerUpActioned(){
         const question = document.querySelector('#sec-question-select').value;

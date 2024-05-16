@@ -6,7 +6,7 @@ Plugin Name: Banner up
 Description: Tool to enable a large, dismissable footer banner on website. Version compatible with PHP 7.4 and WordPress 5.7.2.
 Author:      Matt Bedford
 Author URI:  https://app.mattbedford.work
-Version:     2.0
+Version:     2.5
 License:     GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
